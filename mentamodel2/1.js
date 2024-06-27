@@ -1,15 +1,20 @@
-// Write a javascript function that displays
-//  a number every two seconds and stops displaying after 5 seconds
-
-function display (){
-    let interval = setInterval(() => {
-      console.log(5);
-    }, 2000);
-   setTimeout(() => {
-     clearInterval(interval)
-   }, 5000);
-
-
+function abort(url) {
+  const controller = new AbortController();
+  const signal = controller.signal;
+  setTimeout(() => {
+    controller.abort();
+  }, 100);
+  fetch(url, { signal })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return response.json();
+    })
+    .then((data) => console.log(data))
+    .catch((error) => {
+      console.log(`There was an error ${error.message}`);
+    });
 }
-display()
 
+abort("https://jsonplaceholder.typicode.com/todos/1");

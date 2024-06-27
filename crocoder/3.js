@@ -1,36 +1,83 @@
-function fetchData(url) {
-  return fetch(url)
+
+function  fetchSimulator (){
+  const delays = [800, 1200, 1000];
+  let promise1 = new Promise((resolve,reject) =>{
+    setTimeout(()=>{
+     fetch("https://jsonplaceholder.typicode.com/todos/1")
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+       })
+       .then((data) => {
+         console.log(data);
+         resolve(data);
+       })
+       .catch((error) => {
+         console.error(error);
+         reject(error);
+       });
+    },delays[0])
+   
+  }) 
+  
+
+ let promise2 = new Promise((resolve, reject) => {
+  setTimeout(()=>{
+  fetch("https://jsonplaceholder.typicode.com/todos/1")
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      return response.json(); 
+      return response.json();
     })
     .then((data) => {
-      console.log(data)
+      console.log(data);
+      resolve(data);
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error);
+      reject(error);
     });
+  },delays[1])
+   
+ });
+    
+    
+     let promise3 = new Promise((resolve, reject) => {
+      setTimeout(()=>{
+     fetch("https://jsonplaceholder.typicode.com/todos/1")
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+       })
+       .then((data) => {
+         console.log(data);
+         resolve(data);
+       })
+       .catch((error) => {
+         console.error(error);
+         reject(error);
+       });
+      },delays[2])
+     
+     })
+     
+
+    Promise.all([promise1, promise2, promise3])
+    .then(data=>{
+      console.log(data)
+    })
+    .catch(error =>{
+      console.log(error)
+    })
 }
-
-
-const urls = [
-  "https://crocoder.dev/data1",
-  "https://crocoder.dev/data2",
-  "https://crocoder.dev/data3",
-];
-
-
-const fetchPromises = urls.map((url) => fetchData(url));
+fetchSimulator();
 
 
 
-// Using Promise.all to wait for all fetch operations to complete
-Promise.all(fetchPromises)
-  .then((responses) => {
-    console.log("All data fetched:", responses);
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
+
+
