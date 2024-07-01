@@ -1,9 +1,9 @@
-function repeatEvery(func,interval){
-setInterval(()=>{
-function hi(){
-    console.log('hello')
-}
-},2000)
+function repeatEvery(func, interval) {
+  setInterval(func, interval);
 }
 
-repeatEvery()
+function hi() {
+  console.log("hello");
+}
+
+repeatEvery(hi, 2000);
